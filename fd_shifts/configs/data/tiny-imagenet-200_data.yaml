@@ -1,0 +1,47 @@
+# @package _global_
+
+data:
+  dataset: tiny-imagenet-200
+  data_dir: ${oc.env:DATASET_ROOT_DIR}/${data.dataset}
+  pin_memory: True
+  img_size: [64, 64, 3]
+  num_workers: 12
+  num_classes: 200
+  reproduce_confidnet_splits: False
+  augmentations:
+    train: # careful, the order here will determine the order of transforms (except normalize will be executed manually at the end after toTensor)
+      #      rotate: 15
+      random_crop: [64, 4]
+      hflip: True
+      to_tensor:
+      normalize: [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
+      cutout: 32
+    val:
+      to_tensor:
+      normalize: [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
+    test:
+      to_tensor:
+      normalize: [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
+  kwargs:
+
+eval:
+  query_studies:
+    iid_study: tiny-imagenet-200
+    new_class_study:
+      - cifar10_64
+      - cifar100_64
+      - svhn_64
+
+trainer:
+  batch_size: 128
+  num_epochs: ${fd_shifts.ifeq_else:${eval.ext_confid_name},tcp,470,${fd_shifts.ifeq_else:${eval.ext_confid_name},dg,300,250}}
+  num_epochs_backbone: 250
+  dg_pretrain_epochs: 100
+  val_split: tinyimagenet_val
+  val_every_n_epoch: 10
+  optimizer:
+    lr: 1e-1
+    weight_decay: 5e-4
+
+model:
+  fc_dim: 2048
