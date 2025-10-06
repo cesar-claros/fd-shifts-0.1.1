@@ -26,7 +26,7 @@ dependencies = [
   "protobuf<=3.20.0",
   "pydantic>=1.10.0,<2.0.0",
   "pytorch-lightning-bolts>=0.3.2",
-  "pytorch-lightning==1.6.5",
+  "pytorch-lightning==1.9.5",
   "rich>=10.7.0",
   "robustness @ https://github.com/MadryLab/robustness/archive/master.tar.gz",
   "scikit-image>=0.18.2",
