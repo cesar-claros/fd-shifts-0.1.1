@@ -1,3 +1,6 @@
+NOTE: This is a modified version of FD-Shifts v0.1.1[https://github.com/IML-DKFZ/fd-shifts/tree/v0.1.1], which includes support for models trained using TinyImagenet.
+
+
 <!-- # FD-Shifts -->
 <p align="center">
     <img src="./docs/fd_shifts_logo.svg">
